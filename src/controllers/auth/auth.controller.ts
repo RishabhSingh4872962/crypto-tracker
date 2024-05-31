@@ -1,3 +1,4 @@
+import  bcrypt  from 'bcrypt';
 import { Response, Request, NextFunction } from "express";
 import { User } from "../../models/User.model";
 import createHttpError from "http-errors";
@@ -17,6 +18,11 @@ export const userRegister = async function (
     email: string;
     password: string;
   } = req.body;
+
+  if (!name || !email || !password) {
+    return next(createHttpError(400,"Enter the valid Credensials"));
+  }
+
 
   const alreadyUser = await User.findOne({ email });
 
@@ -61,7 +67,7 @@ export const userLogin = async function (
     cpassword: string;
   } = req.body;
 
-  if (password!=cpassword || !email) {
+  if (!password ||!email || !cpassword || password!=cpassword) {
     return next(createHttpError(400,"Enter the valid Credensials"));
   }
 
@@ -71,6 +77,12 @@ export const userLogin = async function (
   if (!user) {
     return next(createHttpError(400, "Enter the Valid Credensials"));
   }
+
+
+  if (!(await bcrypt.compare(password,user.password))) {
+    return next(createHttpError(401,"Enter the valid Credensials"));
+  }
+
 
   const token = await generateToken({ userId: user.id });
   if (!token) {

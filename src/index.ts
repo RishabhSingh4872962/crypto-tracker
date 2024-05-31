@@ -11,7 +11,8 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(cookieParser());
 
-app.use("/api/v1/auth/", authRouter);
+app.use("/api/v1/auth/user", authRouter);
+
 app.use(globalErrorHandler);
 
 export default app;
