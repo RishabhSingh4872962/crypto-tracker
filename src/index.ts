@@ -6,10 +6,12 @@ import { globalErrorHandler } from "./middlewares/globalErrorHandler";
 
 const app = express();
 
+import cookieParser from "cookie-parser";
 app.use(express.json());
 app.use(morgan("dev"));
+app.use(cookieParser());
 
-app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/auth/", authRouter);
 app.use(globalErrorHandler);
 
 export default app;
