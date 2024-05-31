@@ -1,16 +1,31 @@
-import express from "express";
+import { _config } from "./config/config";
+import connectDB from "./config/db";
+import redisClient from "./config/redisDB";
+import app from "./index";
+const port = _config.PORT;
+
+async function runServer() {
+
+  try {
+  await  connectDB();
+
+  redisClient.connect().then(()=>{
+    console.log("Redis Connected");
+  
+   }).catch((err:unknown)=>{
+    console.log(err);
+    process.exit(1);
+  })
 
 
-const app=express();
-const port=3000;
+  } catch (error) {
+    console.log(error);
+    process.exit(1)    
+  }
 
-app.get("/",function(req,res,next){
-
-    res.status(200).send({success:true,msg:"server is running"})
-})
-
-
-app.listen(port,function () {
+  app.listen(port, function () {
     console.log(`Server is listeing on port ${port}`);
-    
-})
+  });
+}
+
+runServer();
