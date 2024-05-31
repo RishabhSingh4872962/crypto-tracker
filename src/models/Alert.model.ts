@@ -17,8 +17,8 @@ const alertSchema = new mongoose.Schema({
   repeat: {
     type: String,
     required: true,
-    default: "Once",
-    enum: ["Once", "Everytime"],
+    default: "once",
+    enum: ["once", "everytime"],
   },
   expiry: {
     type: Date,
@@ -33,11 +33,10 @@ const alertSchema = new mongoose.Schema({
   lastTriggered: {
     type: Date,
     required: true,
-    default: null,
+    default: new Date(0),
   },
   createdAt: {
     type: Date,
-    required: true,
     default: new Date(),
   },
 });
