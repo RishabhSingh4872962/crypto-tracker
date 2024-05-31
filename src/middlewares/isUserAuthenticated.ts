@@ -3,9 +3,10 @@ import { Request, Response, NextFunction } from "express";
 import createHttpError from "http-errors";
 import { verifyToken } from "../helpers/verifyToken";
 import { User } from "../models/User.model";
+import mongoose, { ObjectId } from "mongoose";
 
 export interface I_CustomRequest extends Request {
-  user: userPayload;
+  user: mongoose.Types.ObjectId;
 }
 
 export const isUserAuthenticated = async (
@@ -32,7 +33,7 @@ export const isUserAuthenticated = async (
     return next(createHttpError(400, "Make a login"));
   }
 
-  (req as I_CustomRequest).user = userPayload;
+  (req as I_CustomRequest).user = user._id;
 
   next();
 };
