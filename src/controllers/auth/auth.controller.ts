@@ -27,7 +27,7 @@ export const userRegister = async function (
   const alreadyUser = await User.findOne({ email });
 
   if (alreadyUser) {
-    return next(createHttpError(400, "Enter the Valid Credensials"));
+    return next(createHttpError(400, "User already exist"));
   }
 
   const user = new User({
@@ -36,9 +36,7 @@ export const userRegister = async function (
     password,
   });
 
-  console.log(user);
   await user.save();
-  console.log(user);
 
   const token = await generateToken({ userId: user.id });
   if (!token) {
@@ -72,7 +70,7 @@ export const userLogin = async function (
   }
 
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).select("password");
 
   if (!user) {
     return next(createHttpError(400, "Enter the Valid Credensials"));
@@ -82,7 +80,7 @@ export const userLogin = async function (
   if (!(await bcrypt.compare(password,user.password))) {
     return next(createHttpError(401,"Enter the valid Credensials"));
   }
-
+  
 
   const token = await generateToken({ userId: user.id });
   if (!token) {
@@ -92,8 +90,8 @@ export const userLogin = async function (
     maxAge: Date.now() + 60 * 60 * 24 * 3 * 1000,
   });
   return res
-    .status(201)
-    .send({ success: true, msg: "User created Successfully" });
+    .status(200)
+    .send({ success: true, msg: "User login Successfully" });
 };
 
 

@@ -6,6 +6,6 @@ import { createAlert } from '../../controllers/alert/alert.controller';
 const alertRouter=express.Router();
 
 
-alertRouter.post("/create",asyncErrorHandler(isUserAuthenticated),asyncErrorHandler(createAlert));
+alertRouter.post("/",asyncErrorHandler(isUserAuthenticated),asyncErrorHandler(createAlert));
 
 export default alertRouter;

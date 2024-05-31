@@ -1,7 +1,8 @@
 import { _config } from "./config/config";
 import connectDB from "./config/db";
 import redisClient from "./config/redisDB";
-import app from "./index";
+import server from "./socketServer";
+
 const port = _config.PORT;
 
 async function runServer() {
@@ -23,7 +24,7 @@ async function runServer() {
     process.exit(1)    
   }
 
-  app.listen(port, function () {
+  server.listen(port, function () {
     console.log(`Server is listeing on port ${port}`);
   });
 }
