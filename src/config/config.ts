@@ -11,6 +11,7 @@ const evnVariables = {
   redis_hostname: process.env.REDIS_HOSTNAME,
   redis_port: process.env.REDIS_PORT,
   redis_password: process.env.REDIS_PASSWORD,
+  redis_hash_key:process.env.REDIS_HASH_KEY|| "redissdadahshkettv"
 };
 
 export const _config = Object.freeze(evnVariables);
