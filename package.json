@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon src/server.ts",
-    "build": "tsc",
-    "start": "node dist/src/server.js"
+    "build": "tsc && node dist/server.js",
+    "start": "node dist/server.js"
   },
   "author": "Rishabh Singh",
   "license": "ISC",
